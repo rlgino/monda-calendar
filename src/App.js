@@ -22,6 +22,8 @@ function App() {
   const [firstDays, setFirstDays] = useState([])
   const [daysOfMonth, setDaysOfMonth] = useState([])
 
+  const [availableHours, setAvailableHours] = useState([])
+
 
   useEffect(() => {
     loadContainer()
@@ -74,6 +76,14 @@ function App() {
       // toggle the aria-hidden state of the given sidebar
       let sidebarState = sidebarElement.getAttribute('aria-hidden');
       sidebarElement.setAttribute('aria-hidden', sidebarState === 'true' ? false : true);
+
+      let hours = []
+      const initHour = 8
+      const endHour = 24
+      for(let i = initHour; i <= endHour; i++){
+        hours[i] = i
+      }
+      setAvailableHours(hours)
     }
   }
 
@@ -86,7 +96,13 @@ function App() {
           <p>{date.getDate() + "/" + MESES[date.getMonth()] + "/" + date.getFullYear()}</p>
         </div>
         <div className="sidebar__content">
-          
+        {
+          availableHours.map(hour => {
+            return(
+            <div className="hour-section">{hour}</div>
+            )
+          })
+        }
         </div>
       </div>
 
