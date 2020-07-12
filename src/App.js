@@ -66,6 +66,11 @@ function App() {
     loadContainer()
   }
 
+  const isToday = (day) => {
+    const today = new Date()
+    return date.getDate() === day && date.getMonth() === today.getMonth() && today.getFullYear() === date.getFullYear()
+  }
+
   const showSidebar = (e) => {
     // get the sidebar ID from the current element data attribute
     const sidebarID = "sidebar1";
@@ -139,7 +144,7 @@ function App() {
         {daysOfMonth.map(day => {
           return (
             <div className="day" key={day} onClick={e => changeDate(e, day)}>
-              <div className={day === date.getDate() ? "day-selected" : ""} key={day}>{day}</div>
+              <div className={ isToday(day) ? "day-selected" : ""} key={day}>{day}</div>
             </div>
           )
         })}
