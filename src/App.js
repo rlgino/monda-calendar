@@ -40,7 +40,12 @@ function App() {
     return () => { }
   }, [])
 
-  const showSidebar = e => {
+  const changeDate = (e, day) => {
+    setDate(new Date(date.getFullYear(), date.getMonth(), day))
+    showSidebar(e)
+  }
+
+  const showSidebar = (e) => {
     // get the sidebar ID from the current element data attribute
     const sidebarID = "sidebar1";
     // check if there is an element on the doc with the id
@@ -55,12 +60,20 @@ function App() {
 
   return (
     <main>
+
       <div id="sidebar1" class="sidebar" aria-hidden="true">
-        <div class="sidebar__content">
+        <div className="sidebar_header">
           <button data-toggle-sidebar="sidebar1" onClick={e => showSidebar(e)}>Close</button>
-          
+          <p>{date.getDate() + "/" + MESES[date.getMonth()] + "/" + date.getFullYear()}</p>
+        </div>
+        <div class="sidebar__content">
+          <hr />
+          <hr />
+          <hr />
+          <hr />
         </div>
       </div>
+
       <div className="date-header">
         <h1>{date.getFullYear()}</h1>
         <select value={date.getMonth()} onChange={e => { console.log(""); }}>
@@ -88,7 +101,7 @@ function App() {
         }
         {daysOfMonth.map(day => {
           return (
-            <div className="day" key={day} onClick={e => showSidebar(e)}>
+            <div className="day" key={day} onClick={e => changeDate(e, day)}>
               <div className={day === date.getDate() ? "day-selected" : ""} key={day}>{day}</div>
             </div>
           )
