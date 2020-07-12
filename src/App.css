@@ -38,6 +38,15 @@ main .container, main .date-header {
   padding-top: 30px;
 }
 
+.year-header {
+  display: flex;
+  align-items: center;
+}
+
+.year-header div {
+  padding: 20px;
+}
+
 .init-days {
   height: 100px;
   width: 100px;

@@ -21,8 +21,14 @@ function App() {
 
   const [firstDays, setFirstDays] = useState([])
   const [daysOfMonth, setDaysOfMonth] = useState([])
-  useEffect(() => {
 
+
+  useEffect(() => {
+    loadContainer()
+    return () => { }
+  }, [])
+
+  const loadContainer = () => {
     var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
     let list = [];
     for (var i = 1; i <= lastDay; i++) {
@@ -36,13 +42,26 @@ function App() {
       firstDays.push(x);
     }
     setFirstDays(firstDays)
-
-    return () => { }
-  }, [])
+  }
 
   const changeDate = (e, day) => {
     setDate(new Date(date.getFullYear(), date.getMonth(), day))
     showSidebar(e)
+  }
+
+  const changeMonth = e => {
+    setDate(new Date(date.getFullYear(), e.target.value, date.getDate()))
+    loadContainer()
+  }
+
+  const moveYear = (i) => {
+    setDate(new Date(date.getFullYear() + i, date.getMonth(), date.getDate()))
+    loadContainer()
+  }
+
+  const goToToday = e => {
+    setDate(new Date());
+    loadContainer()
   }
 
   const showSidebar = (e) => {
@@ -61,28 +80,30 @@ function App() {
   return (
     <main>
 
-      <div id="sidebar1" class="sidebar" aria-hidden="true">
+      <div id="sidebar1" className="sidebar" aria-hidden="true">
         <div className="sidebar_header">
           <button data-toggle-sidebar="sidebar1" onClick={e => showSidebar(e)}>Close</button>
           <p>{date.getDate() + "/" + MESES[date.getMonth()] + "/" + date.getFullYear()}</p>
         </div>
-        <div class="sidebar__content">
-          <hr />
-          <hr />
-          <hr />
-          <hr />
+        <div className="sidebar__content">
+          
         </div>
       </div>
 
       <div className="date-header">
-        <h1>{date.getFullYear()}</h1>
-        <select value={date.getMonth()} onChange={e => { console.log(""); }}>
+        <div className="year-header">
+          <div onClick={e => moveYear(-1)}> {"<"} </div>
+          <h1>{date.getFullYear()}</h1>
+          <div onClick={e => moveYear(1)}> {">"} </div>
+        </div>
+        <select value={date.getMonth()} onChange={e => { changeMonth(e) }}>
           {
             Object.keys(MESES).map((key, index) => {
               return <option value={key} key={index}>{MESES[key]}</option>
             })
           }
         </select>
+        <input type="button" onClick={e => goToToday()} value="Hoy" />
       </div>
       <div className="container">
         <div className="day-header">Domingo</div>
