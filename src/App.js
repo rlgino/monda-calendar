@@ -39,11 +39,31 @@ function App() {
 
     return () => { }
   }, [])
+
+  const showSidebar = e => {
+    // get the sidebar ID from the current element data attribute
+    const sidebarID = "sidebar1";
+    // check if there is an element on the doc with the id
+    const sidebarElement = sidebarID ? document.getElementById(sidebarID) : undefined;
+    // if there is a sidebar with the passed id (data-toggle-sidebar)
+    if (sidebarElement) {
+      // toggle the aria-hidden state of the given sidebar
+      let sidebarState = sidebarElement.getAttribute('aria-hidden');
+      sidebarElement.setAttribute('aria-hidden', sidebarState === 'true' ? false : true);
+    }
+  }
+
   return (
     <main>
+      <div id="sidebar1" class="sidebar" aria-hidden="true">
+        <div class="sidebar__content">
+          <button data-toggle-sidebar="sidebar1" onClick={e => showSidebar(e)}>Close</button>
+          
+        </div>
+      </div>
       <div className="date-header">
         <h1>{date.getFullYear()}</h1>
-        <select value={date.getMonth()} onChange={ e => {console.log("");}}>
+        <select value={date.getMonth()} onChange={e => { console.log(""); }}>
           {
             Object.keys(MESES).map((key, index) => {
               return <option value={key} key={index}>{MESES[key]}</option>
@@ -68,7 +88,7 @@ function App() {
         }
         {daysOfMonth.map(day => {
           return (
-            <div className="day" key={day}>
+            <div className="day" key={day} onClick={e => showSidebar(e)}>
               <div className={day === date.getDate() ? "day-selected" : ""} key={day}>{day}</div>
             </div>
           )
