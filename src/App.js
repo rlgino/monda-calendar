@@ -71,6 +71,22 @@ function App() {
     return date.getDate() === day && date.getMonth() === today.getMonth() && today.getFullYear() === date.getFullYear()
   }
 
+  const agregar = (e) => {
+    let data = {
+      fecha: date,
+      inicio: 8,
+      fin: 10
+    }
+    fetch('/api/agregar', {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(res => console.log(res))
+      .catch(reason => console.log(reason))
+  }
+
   const showSidebar = (e) => {
     // get the sidebar ID from the current element data attribute
     const sidebarID = "sidebar1";
@@ -85,7 +101,7 @@ function App() {
       let hours = []
       const initHour = 8
       const endHour = 24
-      for(let i = initHour; i <= endHour; i++){
+      for (let i = initHour; i <= endHour; i++) {
         hours[i] = i
       }
       setAvailableHours(hours)
@@ -101,13 +117,13 @@ function App() {
           <p>{date.getDate() + "/" + MESES[date.getMonth()] + "/" + date.getFullYear()}</p>
         </div>
         <div className="sidebar__content">
-        {
-          availableHours.map(hour => {
-            return(
-            <div className="hour-section">{hour}</div>
-            )
-          })
-        }
+          {
+            availableHours.map(hour => {
+              return (
+                <div className="hour-section">{hour}</div>
+              )
+            })
+          }
         </div>
       </div>
 
@@ -125,6 +141,7 @@ function App() {
           }
         </select>
         <input type="button" onClick={e => goToToday()} value="Hoy" />
+        <input type="button" value="Saludar" onClick={e => agregar(e)}></input>
       </div>
       <div className="container">
         <div className="day-header">Domingo</div>
@@ -144,7 +161,7 @@ function App() {
         {daysOfMonth.map(day => {
           return (
             <div className="day" key={day} onClick={e => changeDate(e, day)}>
-              <div className={ isToday(day) ? "day-selected" : ""} key={day}>{day}</div>
+              <div className={isToday(day) ? "day-selected" : ""} key={day}>{day}</div>
             </div>
           )
         })}
