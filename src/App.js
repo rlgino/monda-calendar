@@ -87,6 +87,17 @@ function App() {
       .catch(reason => console.log(reason))
   }
 
+  const consultar = (e) => {
+    let data = {
+      fecha: date,
+      inicio: 8,
+      fin: 10
+    }
+    fetch('/api/consultar')
+      .then(res => console.log(res))
+      .catch(reason => console.log(reason))
+  }
+
   const showSidebar = (e) => {
     // get the sidebar ID from the current element data attribute
     const sidebarID = "sidebar1";
@@ -142,6 +153,7 @@ function App() {
         </select>
         <input type="button" onClick={e => goToToday()} value="Hoy" />
         <input type="button" value="Saludar" onClick={e => agregar(e)}></input>
+        <input type="button" value="Consultar" onClick={e => consultar(e)}></input>
       </div>
       <div className="container">
         <div className="day-header">Domingo</div>
