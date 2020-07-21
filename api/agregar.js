@@ -1,23 +1,22 @@
-import {client,q} from './faunaDB'
+const { crearCita } = require("./firebase");
 
 module.exports = (req, res) => {
   let body = req.body
   console.log(body);
+  const data = {
+    fecha: Date.parse(body.fecha),
+    inicio: body.inicio,
+    fin: body.fin
+  }
 
-  client.query(
-    q.Create(
-      q.Collection('calendar'),
-      { data: { 
-        fecha: body.fecha,
-        inicio: body.inicio,
-        fin: body.fin
-       } }
-    )
-  ).then(result => {
+  console.log(data);
+  
+
+  crearCita(data).then(response => {
     console.log(res);
-    res.status(200).send(result.ts)
+    res.status(200).send(response)
   }).catch(reason => {
-    console.error(reason);
+
     res.status(500).send(reason)
   })
 }

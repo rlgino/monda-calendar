@@ -18,11 +18,13 @@ function App() {
     12: "Diciembre"
   }
   const [date, setDate] = useState(new Date());
+  const [parte, setParte] = useState('dia');
 
   const [firstDays, setFirstDays] = useState([])
   const [daysOfMonth, setDaysOfMonth] = useState([])
 
   const [availableHours, setAvailableHours] = useState([])
+  const today = new Date()
 
 
   useEffect(() => {
@@ -67,8 +69,7 @@ function App() {
   }
 
   const isToday = (day) => {
-    const today = new Date()
-    return date.getDate() === day && date.getMonth() === today.getMonth() && today.getFullYear() === date.getFullYear()
+    return today.getDate() === day && date.getMonth() === today.getMonth() && today.getFullYear() === date.getFullYear()
   }
 
   const agregar = (e) => {
@@ -119,66 +120,129 @@ function App() {
     }
   }
 
-  return (
-    <main>
+  return (<>
+    <div className="w-full h-full sm:w-2/5 border">
+      <div className={parte === 'dia' ? 'w-full h-auto header-day' : parte === 'noche' ? 'w-full h-auto header-night' : 'w-full h-auto header-afternoon'}>
+        <div className="w-full px-8 py-6">
+          <div className="text-xl font-medium text-white flex items-center">
+            <div className="mr-2">
+              <svg
+                width="1em"
+                height="1em"
+                viewBox="0 0 16 16"
+                className="bi bi-caret-left-fill"
+                fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M3.86 8.753l5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"
+                />
+              </svg>
+            </div>
+            <span>{date.getFullYear()} {MESES[date.getMonth() + 1]}</span>
+            <div className="ml-2">
+              <svg
+                width="1em"
+                height="1em"
+                viewBox="0 0 16 16"
+                className="bi bi-caret-right-fill"
+                fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" />
+              </svg>
+            </div>
+          </div>
+        </div>
 
-      <div id="sidebar1" className="sidebar" aria-hidden="true">
-        <div className="sidebar_header">
-          <button data-toggle-sidebar="sidebar1" onClick={e => showSidebar(e)}>Close</button>
-          <p>{date.getDate() + "/" + MESES[date.getMonth()] + "/" + date.getFullYear()}</p>
-        </div>
-        <div className="sidebar__content">
-          {
-            availableHours.map(hour => {
-              return (
-                <div className="hour-section">{hour}</div>
-              )
-            })
-          }
-        </div>
-      </div>
 
-      <div className="date-header">
-        <div className="year-header">
-          <div onClick={e => moveYear(-1)}> {"<"} </div>
-          <h1>{date.getFullYear()}</h1>
-          <div onClick={e => moveYear(1)}> {">"} </div>
+        <div className="calendario-header font-bold">
+          <div className="flex justify-center items-center text-white">
+            D
+          </div>
+          <div className="flex justify-center items-center text-white">
+            L
+          </div>
+          <div className="flex justify-center items-center text-white">
+            M
+          </div>
+          <div className="flex justify-center items-center text-white">
+            X
+          </div>
+          <div className="flex justify-center items-center text-white">
+            J
+          </div>
+          <div className="flex justify-center items-center text-white">
+            V
+          </div>
+          <div className="flex justify-center items-center text-white">
+            S
+          </div>
         </div>
-        <select value={date.getMonth()} onChange={e => { changeMonth(e) }}>
-          {
-            Object.keys(MESES).map((key, index) => {
-              return <option value={key} key={index}>{MESES[key]}</option>
-            })
-          }
-        </select>
-        <input type="button" onClick={e => goToToday()} value="Hoy" />
-        <input type="button" value="Saludar" onClick={e => agregar(e)}></input>
-        <input type="button" value="Consultar" onClick={e => consultar(e)}></input>
-      </div>
-      <div className="container">
-        <div className="day-header">Domingo</div>
-        <div className="day-header">Lunes</div>
-        <div className="day-header">Martes</div>
-        <div className="day-header">Miercoles</div>
-        <div className="day-header">Jueves</div>
-        <div className="day-header">Viernes</div>
-        <div className="day-header">Sábado</div>
+      </div >
+
+      <div className="calendario-body">
         {
           firstDays.map(d => {
             return (
-              <div className="init-days" key={d}>X</div>
+              <button className="border-r border-b text-gray-500 px-2 py-2" key={d}>X</button>
             )
           })
         }
-        {daysOfMonth.map(day => {
-          return (
-            <div className="day" key={day} onClick={e => changeDate(e, day)}>
-              <div className={isToday(day) ? "day-selected" : ""} key={day}>{day}</div>
-            </div>
-          )
-        })}
+        {
+          daysOfMonth.map(day => {
+            return (
+              <button
+                className={isToday(day) ? "border-2 border-blue-900 shadow bg-orange-100 px-2 py-2 add-task" : "border-r border-b px-2 py-2"}
+                key={day}
+                onClick={e => changeDate(e, day)}
+              >{day}</button>
+            )
+          })
+        }
       </div>
-    </main>
+    </div>
+
+    <div className="flex h-full w-full p-4 sidebar" aria-hidden="true" id="sidebar1">
+      <div className="h-full w-2 border-r-2 border-blue-300"></div>
+      <div className="h-full w-full ml-2">
+        <div className="flex bg-gray-200 border border-gay-300 rounded text-sm p-1" onClick={ e => agregar(e)}>
+          <div className="flex flex-col justify-between h-full">
+            <span className="text-gray-700">08:00</span>
+            <span
+              className="bg-blue-300 rounded-full w-3 h-3 hour-item"
+            ></span>
+            <span className="text-gray-700">10:00</span>
+          </div>
+
+          <div className="ml-2 text-xs">
+            <strong>Reunion con mi amigo Marquitos.</strong>
+            <div className="mt-2">
+              Tengo que hablar por un aumento de sueldo a Nahuel. Nota: Pienso
+              que quiere despedir a Nahuel. Espero que safe
+              </div>
+          </div>
+        </div>
+        <div className="flex bg-gray-200 border border-gay-300 rounded text-sm p-1  mt-4">
+          <div className="flex flex-col justify-between h-full">
+            <span className="text-gray-700">14:00</span>
+            <span
+              className="bg-blue-300 rounded-full w-3 h-3 hour-item"
+            ></span>
+            <span className="text-gray-700">18:00</span>
+          </div>
+
+          <div className="ml-2 text-xs">
+            <strong>Reunion con Nahuel.</strong>
+            <div className="mt-2">
+              Bono por terminar el calendario
+              </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </>
   );
 }
 

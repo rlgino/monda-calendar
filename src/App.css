@@ -1,74 +1,52 @@
-main {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
+.calendario-body {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  width: 100%;
+  height: 360px;
 }
 
-h1 {
-  font-size: 45px;
+.calendario-header {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: 60px;
+  width: 100%;
+  background: linear-gradient(
+    0deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(0, 0, 0, 0.5) 35%,
+    rgba(0, 0, 0, 0) 100%
+  );
 }
 
-main .container, main .date-header {
-  margin: auto;
+/* HEADER para horario */
+.header-nigth {
+  background: url('https://raw.githubusercontent.com/nwasandoval/calendario/master/noche.jpg'); 
+  background-size: cover;
 }
 
-.date-header {
-  display: flex;
-  align-items: center;
-  width: 700px;
-  justify-content: space-around;
+.header-day {
+  background: url('https://raw.githubusercontent.com/nwasandoval/calendario/master/dia.jpg'); 
+  background-size: cover;
 }
 
-.container {
-  height: 600px;
-  width: 700px;
-  background-color: gray;
-  display: flex;
-  flex-wrap: wrap;
-  border-radius: 25px;
-  margin-bottom: 100px;
+.header-afternoon {
+  background: url('https://raw.githubusercontent.com/nwasandoval/calendario/master/tarde.jpg'); 
+  background-size: cover;
 }
+/* FIN HEADER para horario */
 
-.day-header {
-  height: 70px;
-  width: 100px;
-  background-color: red;
-  text-align: center;
-  font-weight: bold;
-  padding-top: 30px;
-}
-
-.year-header {
-  display: flex;
-  align-items: center;
-}
-
-.year-header div {
-  padding: 20px;
-}
-
-.init-days {
-  height: 100px;
-  width: 100px;
-  background-color: gray;
-}
-
-.day {
-  height: 100px;
-  width: 100px;
-  text-align: center;
-  font-weight: bold;
-  background-color: blue;
-}
-
-.day-selected {
-  background-color: green;
-  border-radius: 25px;
+.w-full {
+  width: 500px;
 }
 
 /* SIDEBAR */
 
 /* SIDEBAR POSITION */
+
+.hour-item {
+  margin-left: -1.225rem
+}
 
 .sidebar {
   background-color: #f1f1f1;
@@ -80,17 +58,9 @@ main .container, main .date-header {
   overflow-y: scroll;
 }
 
-.sidebar_header {
-  display: flex;
-  justify-content: space-between;
-}
-
-.sidebar__content {
-  padding: 8px;
-  overflow-x: hidden;
+.display-flex {
   display: flex;
   flex-direction: column;
-  justify-content: center;
 }
 
 .hour-section {
