@@ -19,6 +19,12 @@
   );
 }
 
+.primary-btn {
+  background-color: #90cdf4;
+  padding: 0.5em;
+  border-radius: 50px;
+}
+
 /* HEADER para horario */
 .header-nigth {
   background: url('https://raw.githubusercontent.com/nwasandoval/calendario/master/noche.jpg'); 

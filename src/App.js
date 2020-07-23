@@ -26,9 +26,12 @@ function App() {
   const [availableHours, setAvailableHours] = useState([])
   const today = new Date()
 
+  const [meetings, setMeetings] = useState([])
+
 
   useEffect(() => {
     loadContainer()
+    loadMeetings()
     return () => { }
   }, [])
 
@@ -46,6 +49,21 @@ function App() {
       firstDays.push(x);
     }
     setFirstDays(firstDays)
+  }
+
+  const loadMeetings = () => {
+    const meetings = [{
+      inicio: '08:00',
+      fin: '10:00',
+      titulo: 'Reunion con Nahuel',
+      descripcion: 'Despedirlo por ir a lo del Baty y no seguir con la página.'
+    },{
+      inicio: '14:00',
+      fin: '18:00',
+      titulo: 'Reunion con mi amigo Marquitos.',
+      descripcion: 'Tengo que hablar por un aumento de sueldo a Nahuel. Nota: Pienso que quiere despedir a Nahuel. Espero que safe'
+    }]
+    setMeetings(meetings)
   }
 
   const changeDate = (e, day) => {
@@ -75,8 +93,10 @@ function App() {
   const agregar = (e) => {
     let data = {
       fecha: date,
-      inicio: 8,
-      fin: 10
+      inicio: "08:00",
+      fin: "10:00",
+      titulo: "Titulo de pruebas",
+      descripcion: "Descripcion de la cosa"
     }
     fetch('/api/agregar', {
       method: 'POST',
@@ -89,11 +109,6 @@ function App() {
   }
 
   const consultar = (e) => {
-    let data = {
-      fecha: date,
-      inicio: 8,
-      fin: 10
-    }
     fetch('/api/consultar')
       .then(res => console.log(res))
       .catch(reason => console.log(reason))
@@ -206,41 +221,30 @@ function App() {
     <div className="flex h-full w-full p-4 sidebar" aria-hidden="true" id="sidebar1">
       <div className="h-full w-2 border-r-2 border-blue-300"></div>
       <div className="h-full w-full ml-2">
-        <div className="flex bg-gray-200 border border-gay-300 rounded text-sm p-1" onClick={ e => agregar(e)}>
-          <div className="flex flex-col justify-between h-full">
-            <span className="text-gray-700">08:00</span>
-            <span
-              className="bg-blue-300 rounded-full w-3 h-3 hour-item"
-            ></span>
-            <span className="text-gray-700">10:00</span>
-          </div>
+        <input type="button" onClick={e => agregar(e)} className="primary-btn" value="Agregar"/>
+        {
+          meetings.map(meet => {
+            return (
+              <div className="flex bg-gray-200 border border-gay-300 rounded text-sm p-1  mt-4">
+                <div className="flex flex-col justify-between h-full">
+                  <span className="text-gray-700">{meet.inicio}</span>
+                  <span
+                    className="bg-blue-300 rounded-full w-3 h-3 hour-item"
+                  ></span>
+                  <span className="text-gray-700">{meet.fin}</span>
+                </div>
 
-          <div className="ml-2 text-xs">
-            <strong>Reunion con mi amigo Marquitos.</strong>
-            <div className="mt-2">
-              Tengo que hablar por un aumento de sueldo a Nahuel. Nota: Pienso
-              que quiere despedir a Nahuel. Espero que safe
+                <div className="ml-2 text-xs">
+                  <strong>{meet.titulo}</strong>
+                  <div className="mt-2">
+                    {meet.descripcion}
+                  </div>
+                </div>
               </div>
-          </div>
-        </div>
-        <div className="flex bg-gray-200 border border-gay-300 rounded text-sm p-1  mt-4">
-          <div className="flex flex-col justify-between h-full">
-            <span className="text-gray-700">14:00</span>
-            <span
-              className="bg-blue-300 rounded-full w-3 h-3 hour-item"
-            ></span>
-            <span className="text-gray-700">18:00</span>
-          </div>
-
-          <div className="ml-2 text-xs">
-            <strong>Reunion con Nahuel.</strong>
-            <div className="mt-2">
-              Bono por terminar el calendario
-              </div>
-          </div>
-        </div>
+            )
+          })
+        }
       </div>
-
     </div>
   </>
   );
