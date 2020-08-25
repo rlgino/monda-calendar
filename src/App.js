@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import './App.css';
+import NewAppoinmentDialog from './components/newdialog';
 
 function App() {
   const MESES = {
@@ -28,6 +29,7 @@ function App() {
 
   const [meetings, setMeetings] = useState([])
 
+  const [showDialog, setShowDialog] = useState(true)
 
   useEffect(() => {
     loadContainer()
@@ -57,7 +59,7 @@ function App() {
       fin: '10:00',
       titulo: 'Reunion con Nahuel',
       descripcion: 'Despedirlo por ir a lo del Baty y no seguir con la página.'
-    },{
+    }, {
       inicio: '14:00',
       fin: '18:00',
       titulo: 'Reunion con mi amigo Marquitos.',
@@ -88,6 +90,10 @@ function App() {
 
   const isToday = (day) => {
     return today.getDate() === day && date.getMonth() === today.getMonth() && today.getFullYear() === date.getFullYear()
+  }
+
+  const newAppointment = (e) => {
+    setShowDialog(true)
   }
 
   const agregar = (e) => {
@@ -136,6 +142,9 @@ function App() {
   }
 
   return (<>
+    {
+      showDialog ? <NewAppoinmentDialog /> : null
+    }
     <div className="w-full h-full sm:w-2/5 border">
       <div className={parte === 'dia' ? 'w-full h-auto header-day' : parte === 'noche' ? 'w-full h-auto header-night' : 'w-full h-auto header-afternoon'}>
         <div className="w-full px-8 py-6">
@@ -221,7 +230,7 @@ function App() {
     <div className="flex h-full w-full p-4 sidebar" aria-hidden="true" id="sidebar1">
       <div className="h-full w-2 border-r-2 border-blue-300"></div>
       <div className="h-full w-full ml-2">
-        <input type="button" onClick={e => agregar(e)} className="primary-btn" value="Agregar"/>
+        <input type="button" onClick={e => newAppointment(e)} className="primary-btn" value="Agregar" />
         {
           meetings.map(meet => {
             return (

@@ -1,0 +1,71 @@
+.main-dialog {
+    position: absolute;
+    background-color: blanchedalmond;
+    height: 300px;
+    width: 500px;
+    border: 1px solid black;
+    margin: auto;
+    margin-top: 10%;
+}
+
+.dialog-actions {
+    display: flex;
+    justify-content: end;
+    width: 100%;
+}
+
+.dialog-actions a {
+    padding: .5em;
+}
+
+.container-dialog {
+    display: grid;
+    width: 90%;
+    grid-gap: 10px;
+    grid-template-areas: "header header header header" "labelfrom fieldfrom labelto fieldto" "labeltitle fieldtitle fieldtitle fieldtitle" "labeldesc fielddesc fielddesc fielddesc" "empty empty empty action";
+}
+
+.item1 {
+    grid-area: header;
+    font-weight: bold;
+    font-size: 2em;
+}
+
+.item2 {
+    grid-area: labelfrom;
+}
+
+.item3 {
+    grid-area: fieldfrom;
+    width: 50px;
+}
+
+.item4 {
+    grid-area: labelto;
+    width: 70px;
+}
+
+.item5 {
+    grid-area: fieldto;
+    width: 50px;
+}
+
+.item6 {
+    grid-area: labeltitle;
+}
+
+.item7 {
+    grid-area: fieldtitle;
+}
+
+.item8 {
+    grid-area: labeldesc;
+}
+
+.item9 {
+    grid-area: fielddesc;
+}
+
+.item10 {
+    grid-area: action;
+}
