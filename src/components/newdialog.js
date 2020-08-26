@@ -1,19 +1,19 @@
 import React from 'react'
 import './newdialog.css'
 
-const NewAppoinmentDialog = () => {
+const NewAppoinmentDialog = ({ onCloseDialog, date }) => {
     return (
         <div className="main-dialog">
-            <div className="dialog-actions">
-                <a href="#"> X </a>
+            <div className="dialog-actions" onClick={e => onCloseDialog()}>
+                X
             </div>
             <div className="container-dialog">
-                <h1 className="item1">Nueva Cita</h1>
+                <h1 className="item1">Nueva Cita - {`${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`}</h1>
 
                 <span className="item2">Hora inicio:</span>
-                <input type="number" name="inicio" className="item3" />
+                <input type="time" id="myTimeStart" value="22:15:00" className="item3"></input>
                 <span className="item4">Hora fin:</span>
-                <input type="number" name="fin" className="item5" />
+                <input type="time" id="myTimeEnd" value="22:15:00" className="item5"></input>
 
                 <span className="item6">Titulo:</span>
                 <input type="Text" className="item7" />

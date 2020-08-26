@@ -6,6 +6,8 @@
     border: 1px solid black;
     margin: auto;
     margin-top: 10%;
+    padding: 1em;
+    border-radius: 25px;
 }
 
 .dialog-actions {
@@ -37,7 +39,7 @@
 
 .item3 {
     grid-area: fieldfrom;
-    width: 50px;
+    width: 100px;
 }
 
 .item4 {
@@ -47,7 +49,7 @@
 
 .item5 {
     grid-area: fieldto;
-    width: 50px;
+    width: 100px;
 }
 
 .item6 {
@@ -68,4 +70,5 @@
 
 .item10 {
     grid-area: action;
+    margin-top: 1em;
 }

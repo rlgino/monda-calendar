@@ -92,8 +92,13 @@ function App() {
     return today.getDate() === day && date.getMonth() === today.getMonth() && today.getFullYear() === date.getFullYear()
   }
 
-  const newAppointment = (e) => {
+  const openNewDialog = (e) => {
+    showSidebar()
     setShowDialog(true)
+  }
+
+  const closeNewDialog = (e) => {
+    setShowDialog(false)
   }
 
   const agregar = (e) => {
@@ -143,7 +148,7 @@ function App() {
 
   return (<>
     {
-      showDialog ? <NewAppoinmentDialog /> : null
+      showDialog ? <NewAppoinmentDialog onCloseDialog={(e) => { closeNewDialog(e) }} date={date} /> : null
     }
     <div className="w-full h-full sm:w-2/5 border">
       <div className={parte === 'dia' ? 'w-full h-auto header-day' : parte === 'noche' ? 'w-full h-auto header-night' : 'w-full h-auto header-afternoon'}>
@@ -230,7 +235,7 @@ function App() {
     <div className="flex h-full w-full p-4 sidebar" aria-hidden="true" id="sidebar1">
       <div className="h-full w-2 border-r-2 border-blue-300"></div>
       <div className="h-full w-full ml-2">
-        <input type="button" onClick={e => newAppointment(e)} className="primary-btn" value="Agregar" />
+        <input type="button" onClick={e => openNewDialog(e)} className="primary-btn" value="Agregar" />
         {
           meetings.map(meet => {
             return (
