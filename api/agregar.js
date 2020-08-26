@@ -1,4 +1,5 @@
 const { crearCita } = require("./firebase");
+const url = require('url');
 
 module.exports = (req, res) => {
   let body = req.body
@@ -9,8 +10,6 @@ module.exports = (req, res) => {
     fin: body.fin
   }
 
-  console.log(data);
-  
 
   crearCita(data).then(response => {
     console.log(res);
@@ -19,4 +18,5 @@ module.exports = (req, res) => {
 
     res.status(500).send(reason)
   })
+
 }

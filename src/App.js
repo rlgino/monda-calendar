@@ -102,7 +102,7 @@ function App() {
   }
 
   const sendAppointment = (data) => {
-    fetch('/api/agregar', {
+    fetch('/api/agregar?user_id=20', {
       method: 'POST',
       body: JSON.stringify(data),
       headers: {
