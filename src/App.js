@@ -101,14 +101,7 @@ function App() {
     setShowDialog(false)
   }
 
-  const agregar = (e) => {
-    let data = {
-      fecha: date,
-      inicio: "08:00",
-      fin: "10:00",
-      titulo: "Titulo de pruebas",
-      descripcion: "Descripcion de la cosa"
-    }
+  const sendAppointment = (data) => {
     fetch('/api/agregar', {
       method: 'POST',
       body: JSON.stringify(data),
@@ -148,7 +141,10 @@ function App() {
 
   return (<>
     {
-      showDialog ? <NewAppoinmentDialog onCloseDialog={(e) => { closeNewDialog(e) }} date={date} /> : null
+      showDialog ? <NewAppoinmentDialog
+        onCloseDialog={(e) => { closeNewDialog(e) }}
+        date={date}
+        sendAppointment={sendAppointment} /> : null
     }
     <div className="w-full h-full sm:w-2/5 border">
       <div className={parte === 'dia' ? 'w-full h-auto header-day' : parte === 'noche' ? 'w-full h-auto header-night' : 'w-full h-auto header-afternoon'}>
