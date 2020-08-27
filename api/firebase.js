@@ -18,7 +18,6 @@ if (!firebase.apps.length) {
 var db = firebase.database()
 
 const crearCita = (cita, userID) => {
-    console.log(`Se va a enviar ${JSON.stringify(cita)}`);
     return firebase.database().ref(`citas/${userID}/${cita.fecha}`).set({
         fecha: cita.fecha,
         desde: cita.inicio,
@@ -28,4 +27,10 @@ const crearCita = (cita, userID) => {
     });
 }
 
-export { crearCita }
+const consultarCita = (userID) => {
+    return firebase.database().ref(`citas/${userID}/`).once('value').then(snapshot => {
+        return snapshot.val()
+    })
+}
+
+export { crearCita, consultarCita }

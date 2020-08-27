@@ -31,9 +31,10 @@ function App() {
 
   const [showDialog, setShowDialog] = useState(false)
 
+  const [userID, setUserID] = useState(20)
+
   useEffect(() => {
     loadContainer()
-    loadMeetings()
     return () => { }
   }, [])
 
@@ -54,18 +55,15 @@ function App() {
   }
 
   const loadMeetings = () => {
-    const meetings = [{
-      inicio: '08:00',
-      fin: '10:00',
-      titulo: 'Reunion con Nahuel',
-      descripcion: 'Despedirlo por ir a lo del Baty y no seguir con la página.'
-    }, {
-      inicio: '14:00',
-      fin: '18:00',
-      titulo: 'Reunion con mi amigo Marquitos.',
-      descripcion: 'Tengo que hablar por un aumento de sueldo a Nahuel. Nota: Pienso que quiere despedir a Nahuel. Espero que safe'
-    }]
-    setMeetings(meetings)
+    const meetings = []
+    fetch(`/api/consultar?user_id=${userID}`).then((response) => {
+      return response.json();
+    }).then((myJson) => {
+      Object.entries(myJson).map(value => {
+        meetings.push(value[1])
+      })
+      setMeetings(meetings)
+    });
   }
 
   const changeDate = (e, day) => {
@@ -102,7 +100,7 @@ function App() {
   }
 
   const sendAppointment = (data) => {
-    fetch('/api/agregar?user_id=20', {
+    fetch(`/api/agregar?user_id=${userID}`, {
       method: 'POST',
       body: JSON.stringify(data),
       headers: {
@@ -138,6 +136,7 @@ function App() {
         hours[i] = i
       }
       setAvailableHours(hours)
+      loadMeetings()
     }
   }
 
@@ -236,14 +235,15 @@ function App() {
         <input type="button" onClick={e => openNewDialog(e)} className="primary-btn" value="Agregar" />
         {
           meetings.map(meet => {
+            console.log(meet);
             return (
               <div className="flex bg-gray-200 border border-gay-300 rounded text-sm p-1  mt-4">
                 <div className="flex flex-col justify-between h-full">
-                  <span className="text-gray-700">{meet.inicio}</span>
+                  <span className="text-gray-700">{meet.desde}</span>
                   <span
                     className="bg-blue-300 rounded-full w-3 h-3 hour-item"
                   ></span>
-                  <span className="text-gray-700">{meet.fin}</span>
+                  <span className="text-gray-700">{meet.hasta}</span>
                 </div>
 
                 <div className="ml-2 text-xs">
