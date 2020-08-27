@@ -17,7 +17,6 @@ const NewAppoinmentDialog = ({ onCloseDialog, date, sendAppointment }) => {
             titulo: title,
             descripcion: description
         }
-        console.log(`Se va a enviar ${JSON.stringify(data)}`);
         sendAppointment(data)
     }
     return (

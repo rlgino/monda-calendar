@@ -29,7 +29,7 @@ function App() {
 
   const [meetings, setMeetings] = useState([])
 
-  const [showDialog, setShowDialog] = useState(true)
+  const [showDialog, setShowDialog] = useState(false)
 
   useEffect(() => {
     loadContainer()
@@ -108,7 +108,9 @@ function App() {
       headers: {
         'Content-Type': 'application/json'
       }
-    }).then(res => console.log(res))
+    }).then(res => {
+      setShowDialog(false)
+    })
       .catch(reason => console.log(reason))
   }
 

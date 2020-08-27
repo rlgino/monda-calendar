@@ -17,11 +17,14 @@ if (!firebase.apps.length) {
 
 var db = firebase.database()
 
-const crearCita = (cita) => {
-    return firebase.database().ref('citas/' + cita.fecha).set({
+const crearCita = (cita, userID) => {
+    console.log(`Se va a enviar ${JSON.stringify(cita)}`);
+    return firebase.database().ref(`citas/${userID}/${cita.fecha}`).set({
         fecha: cita.fecha,
         desde: cita.inicio,
-        hasta: cita.fin
+        hasta: cita.fin,
+        titulo: cita.titulo,
+        descripcion: cita.descripcion
     });
 }
 

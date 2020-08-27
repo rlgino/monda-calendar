@@ -7,15 +7,15 @@ module.exports = (req, res) => {
   const data = {
     fecha: Date.parse(body.fecha),
     inicio: body.inicio,
-    fin: body.fin
+    fin: body.fin,
+    titulo: body.titulo,
+    descripcion: body.descripcion
   }
-
-
-  crearCita(data).then(response => {
-    console.log(res);
+  const queryObject = url.parse(req.url, true).query;
+  const userID = queryObject.user_id;
+  crearCita(data, userID).then(response => {
     res.status(200).send(response)
   }).catch(reason => {
-
     res.status(500).send(reason)
   })
 
