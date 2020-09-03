@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import './newdialog.css'
+import { formatDate } from '../utils'
 
 const NewAppoinmentDialog = ({ onCloseDialog, date, sendAppointment }) => {
     const [timeFrom, setTimeFrom] = useState(null)
@@ -25,7 +26,7 @@ const NewAppoinmentDialog = ({ onCloseDialog, date, sendAppointment }) => {
                 X
             </div>
             <form className="container-dialog" onSubmit={createNewAppointment}>
-                <h1 className="item1">Nueva Cita - {`${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`}</h1>
+                <h1 className="item1">Nueva Cita - {formatDate(date)}</h1>
 
                 <span className="item2">Hora inicio:</span>
                 <input type="time" id="myTimeStart" value="22:15:00" className="item3" value={timeFrom} onChange={e => setTimeFrom(e.target.value)}></input>

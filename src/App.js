@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useState } from 'react';
 import './App.css';
 import NewAppoinmentDialog from './components/newdialog';
+import { formatDate, revertDate } from './utils';
 
 function App() {
   const MESES = {
@@ -56,7 +57,10 @@ function App() {
 
   const loadMeetings = () => {
     const meetings = []
-    fetch(`/api/consultar?user_id=${userID}`).then((response) => {
+    const encodeDate = encodeURIComponent(revertDate(date))
+    fetch(`/api/consultar?user_id=${userID}&fecha=${encodeDate}`).catch(reason => {
+      console.log(reason);
+    }).then((response) => {
       return response.json();
     }).then((myJson) => {
       Object.entries(myJson).map(value => {
