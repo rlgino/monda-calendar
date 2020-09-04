@@ -6,18 +6,18 @@ import { revertDate } from './utils';
 
 function App() {
   const MESES = {
-    1: "Enero",
-    2: "Febrero",
-    3: "Marzo",
-    4: "Abril",
-    5: "Mayo",
-    6: "Junio",
-    7: "Julio",
-    8: "Agosto",
-    9: "Septiembre",
-    10: "Octubre",
-    11: "Noviembre",
-    12: "Diciembre"
+    0: "Enero",
+    1: "Febrero",
+    2: "Marzo",
+    3: "Abril",
+    4: "Mayo",
+    5: "Junio",
+    6: "Julio",
+    7: "Agosto",
+    8: "Septiembre",
+    9: "Octubre",
+    10: "Noviembre",
+    11: "Diciembre"
   }
   const [date, setDate] = useState(new Date());
   const [parte, setParte] = useState('dia');
@@ -78,15 +78,18 @@ function App() {
 
   const changeMonth = e => {
     setDate(new Date(date.getFullYear(), e.target.value, date.getDate()))
+    console.log(`Mes seleccionado: ${e.target.value}`);
     loadContainer()
   }
 
   const moveYear = (i) => {
+    console.log("Moviendo año");
     setDate(new Date(date.getFullYear() + i, date.getMonth(), date.getDate()))
     loadContainer()
   }
 
   const goToToday = e => {
+    console.log("Moviendo ahora");
     setDate(new Date());
     loadContainer()
   }
@@ -141,10 +144,11 @@ function App() {
     }
     <div className="w-full h-full sm:w-2/5 border">
       <div className={parte === 'dia' ? 'w-full h-auto header-day' : parte === 'noche' ? 'w-full h-auto header-night' : 'w-full h-auto header-afternoon'}>
-        <div className="w-full px-8 py-6" onClick={e => goToToday()}>
+        <div className="w-full px-8 py-6">
           <div className="text-xl font-medium text-white flex items-center">
             <div className="mr-2">
               <svg
+                onClick={e => moveYear(-1)}
                 width="1em"
                 height="1em"
                 viewBox="0 0 16 16"
@@ -159,7 +163,7 @@ function App() {
             </div>
             <span>
               {date.getFullYear()}
-              <select value={date.getMonth()} onChange={e => { console.log(""); }} className="combo-months">
+              <select dir="rtl" value={date.getMonth()} onChange={e => { changeMonth(e) }} className="combo-months">
                 {
                   Object.keys(MESES).map((key, index) => {
                     return <option value={key} key={index}>{MESES[key]}</option>
@@ -169,6 +173,7 @@ function App() {
             </span>
             <div className="ml-2">
               <svg
+                onClick={e => moveYear(+1)}
                 width="1em"
                 height="1em"
                 viewBox="0 0 16 16"
