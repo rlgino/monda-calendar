@@ -5,20 +5,20 @@ import NewAppoinmentDialog from './components/newdialog';
 import { revertDate } from './utils';
 
 function App() {
-  const MESES = {
-    0: "Enero",
-    1: "Febrero",
-    2: "Marzo",
-    3: "Abril",
-    4: "Mayo",
-    5: "Junio",
-    6: "Julio",
-    7: "Agosto",
-    8: "Septiembre",
-    9: "Octubre",
-    10: "Noviembre",
-    11: "Diciembre"
-  }
+  const MESES = [
+    "Enero",
+    "Febrero",
+    "Marzo",
+    "Abril",
+    "Mayo",
+    "Junio",
+    "Julio",
+    "Agosto",
+    "Septiembre",
+    "Octubre",
+    "Noviembre",
+    "Diciembre"
+  ]
   const [date, setDate] = useState(new Date());
   const [parte, setParte] = useState('dia');
 
@@ -77,8 +77,10 @@ function App() {
   }
 
   const changeMonth = e => {
-    setDate(new Date(date.getFullYear(), e.target.value, date.getDate()))
-    console.log(`Mes seleccionado: ${e.target.value}`);
+    const month = parseInt(e.target.value)
+    console.log(`Nuevo mes: ${month}`);
+    setDate(new Date(date.getFullYear(), month, date.getDate()))
+    console.log(`Fecha actual: ${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`);
     loadContainer()
   }
 
@@ -163,10 +165,11 @@ function App() {
             </div>
             <span>
               {date.getFullYear()}
-              <select dir="rtl" value={date.getMonth()} onChange={e => { changeMonth(e) }} className="combo-months">
+              <select dir="rtl" value={date.getMonth()} onChange={e => { changeMonth(e) }} className="combo-months" disabled>
                 {
-                  Object.keys(MESES).map((key, index) => {
-                    return <option value={key} key={index}>{MESES[key]}</option>
+                  MESES.map((value, index) => {
+                    console.log(date.getMonth());
+                    return <option value={index} key={index}>{value}</option>
                   })
                 }
               </select>
