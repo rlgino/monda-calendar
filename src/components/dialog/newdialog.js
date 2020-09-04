@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import './newdialog.css'
-import { formatDate } from '../utils'
+import { formatDate } from '../../utils'
 
 const NewAppoinmentDialog = ({ onCloseDialog, date, sendAppointment }) => {
     const [timeFrom, setTimeFrom] = useState(null)
