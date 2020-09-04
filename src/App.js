@@ -78,9 +78,7 @@ function App() {
 
   const changeMonth = e => {
     const month = parseInt(e.target.value)
-    console.log(`Nuevo mes: ${month}`);
     setDate(new Date(date.getFullYear(), month, date.getDate()))
-    console.log(`Fecha actual: ${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`);
     loadContainer()
   }
 
@@ -168,7 +166,6 @@ function App() {
               <select dir="rtl" value={date.getMonth()} onChange={e => { changeMonth(e) }} className="combo-months" disabled>
                 {
                   MESES.map((value, index) => {
-                    console.log(date.getMonth());
                     return <option value={index} key={index}>{value}</option>
                   })
                 }
