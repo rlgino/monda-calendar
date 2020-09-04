@@ -1,4 +1,4 @@
-const { crearCita } = require("./firebase");
+const { crearCita } = require("../src/firebase/firebase");
 const url = require('url');
 
 module.exports = (req, res) => {
@@ -13,7 +13,8 @@ module.exports = (req, res) => {
   }
   const queryObject = url.parse(req.url, true).query;
   const userID = queryObject.user_id;
-  crearCita(data, userID).then(response => {
+
+  crearCita(data, userID, new Date(body.fecha)).then(response => {
     res.status(200).send(response)
   }).catch(reason => {
     res.status(500).send(reason)

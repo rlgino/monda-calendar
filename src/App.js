@@ -1,39 +1,28 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import './App.css';
-import NewAppoinmentDialog from './components/newdialog';
+import NewAppoinmentDialog from './components/dialog/newdialog';
+import { revertDate } from './utils';
+import Header from './components/header/header';
 
 function App() {
-  const MESES = {
-    1: "Enero",
-    2: "Febrero",
-    3: "Marzo",
-    4: "Abril",
-    5: "Mayo",
-    6: "Junio",
-    7: "Julio",
-    8: "Agosto",
-    9: "Septiembre",
-    10: "Octubre",
-    11: "Noviembre",
-    12: "Diciembre"
-  }
   const [date, setDate] = useState(new Date());
   const [parte, setParte] = useState('dia');
 
   const [firstDays, setFirstDays] = useState([])
   const [daysOfMonth, setDaysOfMonth] = useState([])
 
-  const [availableHours, setAvailableHours] = useState([])
   const today = new Date()
 
   const [meetings, setMeetings] = useState([])
 
   const [showDialog, setShowDialog] = useState(false)
 
-  const [userID, setUserID] = useState(20)
+  const [userID, setUserID] = useState(null)
 
   useEffect(() => {
+    setParte(date.getHours() < 17 && date.getHours() > 8 ? 'dia' : date.getHours() < 20 && date.getHours() > 17 ? 'tarde' : 'noche')
+    setUserID(20)
     loadContainer()
     return () => { }
   }, [])
@@ -56,10 +45,13 @@ function App() {
 
   const loadMeetings = () => {
     const meetings = []
-    fetch(`/api/consultar?user_id=${userID}`).then((response) => {
+    const encodeDate = encodeURIComponent(revertDate(date))
+    fetch(`/api/consultar?user_id=${userID}&fecha=${encodeDate}`).catch(reason => {
+      console.log(reason);
+    }).then((response) => {
       return response.json();
     }).then((myJson) => {
-      Object.entries(myJson).map(value => {
+      Object.entries(myJson).forEach(value => {
         meetings.push(value[1])
       })
       setMeetings(meetings)
@@ -72,7 +64,8 @@ function App() {
   }
 
   const changeMonth = e => {
-    setDate(new Date(date.getFullYear(), e.target.value, date.getDate()))
+    const month = parseInt(e.target.value)
+    setDate(new Date(date.getFullYear(), month, date.getDate()))
     loadContainer()
   }
 
@@ -112,12 +105,6 @@ function App() {
       .catch(reason => console.log(reason))
   }
 
-  const consultar = (e) => {
-    fetch('/api/consultar')
-      .then(res => console.log(res))
-      .catch(reason => console.log(reason))
-  }
-
   const showSidebar = (e) => {
     // get the sidebar ID from the current element data attribute
     const sidebarID = "sidebar1";
@@ -129,13 +116,6 @@ function App() {
       let sidebarState = sidebarElement.getAttribute('aria-hidden');
       sidebarElement.setAttribute('aria-hidden', sidebarState === 'true' ? false : true);
 
-      let hours = []
-      const initHour = 8
-      const endHour = 24
-      for (let i = initHour; i <= endHour; i++) {
-        hours[i] = i
-      }
-      setAvailableHours(hours)
       loadMeetings()
     }
   }
@@ -149,37 +129,7 @@ function App() {
     }
     <div className="w-full h-full sm:w-2/5 border">
       <div className={parte === 'dia' ? 'w-full h-auto header-day' : parte === 'noche' ? 'w-full h-auto header-night' : 'w-full h-auto header-afternoon'}>
-        <div className="w-full px-8 py-6">
-          <div className="text-xl font-medium text-white flex items-center">
-            <div className="mr-2">
-              <svg
-                width="1em"
-                height="1em"
-                viewBox="0 0 16 16"
-                className="bi bi-caret-left-fill"
-                fill="currentColor"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M3.86 8.753l5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"
-                />
-              </svg>
-            </div>
-            <span>{date.getFullYear()} {MESES[date.getMonth() + 1]}</span>
-            <div className="ml-2">
-              <svg
-                width="1em"
-                height="1em"
-                viewBox="0 0 16 16"
-                className="bi bi-caret-right-fill"
-                fill="currentColor"
-                xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" />
-              </svg>
-            </div>
-          </div>
-        </div>
+        <Header date={date} changeMonth={changeMonth} moveYear={moveYear} />
 
 
         <div className="calendario-header font-bold">
@@ -235,7 +185,6 @@ function App() {
         <input type="button" onClick={e => openNewDialog(e)} className="primary-btn" value="Agregar" />
         {
           meetings.map(meet => {
-            console.log(meet);
             return (
               <div className="flex bg-gray-200 border border-gay-300 rounded text-sm p-1  mt-4">
                 <div className="flex flex-col justify-between h-full">

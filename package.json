@@ -6,7 +6,8 @@
     "firebase": "^7.16.1",
     "react": "^16.6.1",
     "react-dom": "^16.6.1",
-    "react-scripts": "2.1.1"
+    "react-scripts": "2.1.1",
+    "uuid": "^8.3.0"
   },
   "scripts": {
     "dev": "BROWSER=none react-scripts start",

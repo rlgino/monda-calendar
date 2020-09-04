@@ -11,12 +11,12 @@
   grid-template-columns: repeat(7, 1fr);
   grid-template-rows: 60px;
   width: 100%;
-  background: linear-gradient(
-    0deg,
-    rgba(2, 0, 36, 1) 0%,
-    rgba(0, 0, 0, 0.5) 35%,
-    rgba(0, 0, 0, 0) 100%
-  );
+  background: linear-gradient( 0deg, rgba(2, 0, 36, 1) 0%, rgba(0, 0, 0, 0.5) 35%, rgba(0, 0, 0, 0) 100%);
+}
+
+.combo-months {
+  background-color: transparent;
+  text-align: right;
 }
 
 .primary-btn {
@@ -26,20 +26,22 @@
 }
 
 /* HEADER para horario */
+
 .header-nigth {
-  background: url('https://raw.githubusercontent.com/nwasandoval/calendario/master/noche.jpg'); 
+  background: url('https://raw.githubusercontent.com/nwasandoval/calendario/master/noche.jpg');
   background-size: cover;
 }
 
 .header-day {
-  background: url('https://raw.githubusercontent.com/nwasandoval/calendario/master/dia.jpg'); 
+  background: url('https://raw.githubusercontent.com/nwasandoval/calendario/master/dia.jpg');
   background-size: cover;
 }
 
 .header-afternoon {
-  background: url('https://raw.githubusercontent.com/nwasandoval/calendario/master/tarde.jpg'); 
+  background: url('https://raw.githubusercontent.com/nwasandoval/calendario/master/tarde.jpg');
   background-size: cover;
 }
+
 /* FIN HEADER para horario */
 
 .w-full {

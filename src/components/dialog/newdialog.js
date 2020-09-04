@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import './newdialog.css'
+import { formatDate } from '../../utils'
 
 const NewAppoinmentDialog = ({ onCloseDialog, date, sendAppointment }) => {
     const [timeFrom, setTimeFrom] = useState(null)
@@ -25,12 +26,12 @@ const NewAppoinmentDialog = ({ onCloseDialog, date, sendAppointment }) => {
                 X
             </div>
             <form className="container-dialog" onSubmit={createNewAppointment}>
-                <h1 className="item1">Nueva Cita - {`${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`}</h1>
+                <h1 className="item1">Nueva Cita - {formatDate(date)}</h1>
 
                 <span className="item2">Hora inicio:</span>
-                <input type="time" id="myTimeStart" value="22:15:00" className="item3" value={timeFrom} onChange={e => setTimeFrom(e.target.value)}></input>
+                <input type="time" id="myTimeStart" className="item3" value={timeFrom} onChange={e => setTimeFrom(e.target.value)}></input>
                 <span className="item4">Hora fin:</span>
-                <input type="time" id="myTimeEnd" value="22:15:00" className="item5" value={timeTo} onChange={e => setTimeTo(e.target.value)}></input>
+                <input type="time" id="myTimeEnd" className="item5" value={timeTo} onChange={e => setTimeTo(e.target.value)}></input>
 
                 <span className="item6">Titulo:</span>
                 <input type="Text" className="item7" value={title} onChange={e => setTitle(e.target.value)} />
