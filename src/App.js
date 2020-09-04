@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useState } from 'react';
 import './App.css';
 import NewAppoinmentDialog from './components/newdialog';
-import { formatDate, revertDate } from './utils';
+import { revertDate } from './utils';
 
 function App() {
   const MESES = {
@@ -25,16 +25,17 @@ function App() {
   const [firstDays, setFirstDays] = useState([])
   const [daysOfMonth, setDaysOfMonth] = useState([])
 
-  const [availableHours, setAvailableHours] = useState([])
   const today = new Date()
 
   const [meetings, setMeetings] = useState([])
 
   const [showDialog, setShowDialog] = useState(false)
 
-  const [userID, setUserID] = useState(20)
+  const [userID, setUserID] = useState(null)
 
   useEffect(() => {
+    setParte(date.getHours() < 17 && date.getHours() > 8 ? 'dia' : date.getHours() < 20 && date.getHours() > 17 ? 'tarde' : 'noche')
+    setUserID(20)
     loadContainer()
     return () => { }
   }, [])
@@ -63,7 +64,7 @@ function App() {
     }).then((response) => {
       return response.json();
     }).then((myJson) => {
-      Object.entries(myJson).map(value => {
+      Object.entries(myJson).forEach(value => {
         meetings.push(value[1])
       })
       setMeetings(meetings)
@@ -116,12 +117,6 @@ function App() {
       .catch(reason => console.log(reason))
   }
 
-  const consultar = (e) => {
-    fetch('/api/consultar')
-      .then(res => console.log(res))
-      .catch(reason => console.log(reason))
-  }
-
   const showSidebar = (e) => {
     // get the sidebar ID from the current element data attribute
     const sidebarID = "sidebar1";
@@ -133,13 +128,6 @@ function App() {
       let sidebarState = sidebarElement.getAttribute('aria-hidden');
       sidebarElement.setAttribute('aria-hidden', sidebarState === 'true' ? false : true);
 
-      let hours = []
-      const initHour = 8
-      const endHour = 24
-      for (let i = initHour; i <= endHour; i++) {
-        hours[i] = i
-      }
-      setAvailableHours(hours)
       loadMeetings()
     }
   }
@@ -153,7 +141,7 @@ function App() {
     }
     <div className="w-full h-full sm:w-2/5 border">
       <div className={parte === 'dia' ? 'w-full h-auto header-day' : parte === 'noche' ? 'w-full h-auto header-night' : 'w-full h-auto header-afternoon'}>
-        <div className="w-full px-8 py-6">
+        <div className="w-full px-8 py-6" onClick={e => goToToday()}>
           <div className="text-xl font-medium text-white flex items-center">
             <div className="mr-2">
               <svg
@@ -169,7 +157,16 @@ function App() {
                 />
               </svg>
             </div>
-            <span>{date.getFullYear()} {MESES[date.getMonth() + 1]}</span>
+            <span>
+              {date.getFullYear()}
+              <select value={date.getMonth()} onChange={e => { console.log(""); }} className="combo-months">
+                {
+                  Object.keys(MESES).map((key, index) => {
+                    return <option value={key} key={index}>{MESES[key]}</option>
+                  })
+                }
+              </select>
+            </span>
             <div className="ml-2">
               <svg
                 width="1em"
@@ -239,7 +236,6 @@ function App() {
         <input type="button" onClick={e => openNewDialog(e)} className="primary-btn" value="Agregar" />
         {
           meetings.map(meet => {
-            console.log(meet);
             return (
               <div className="flex bg-gray-200 border border-gay-300 rounded text-sm p-1  mt-4">
                 <div className="flex flex-col justify-between h-full">
