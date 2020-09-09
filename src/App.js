@@ -21,7 +21,13 @@ function App() {
   const [userID, setUserID] = useState(null)
 
   useEffect(() => {
-    setParte(date.getHours() < 17 && date.getHours() > 8 ? 'dia' : date.getHours() < 20 && date.getHours() > 17 ? 'tarde' : 'noche')
+    if (date.getHours() <= 17 && date.getHours() >= 8) {
+      setParte('dia')
+    } else if (date.getHours() >= 17 && date.getHours() <= 20) {
+      setParte('tarde')
+    } else {
+      setParte('noche')
+    }
     setUserID(20)
     loadContainer()
     return () => { }
@@ -130,8 +136,6 @@ function App() {
     <div className="w-full h-full sm:w-2/5 border">
       <div className={parte === 'dia' ? 'w-full h-auto header-day' : parte === 'noche' ? 'w-full h-auto header-night' : 'w-full h-auto header-afternoon'}>
         <Header date={date} changeMonth={changeMonth} moveYear={moveYear} />
-
-
         <div className="calendario-header font-bold">
           <div className="flex justify-center items-center text-white">
             D
