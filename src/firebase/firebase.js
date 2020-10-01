@@ -2,7 +2,8 @@ import { revertDate } from '../utils';
 import { v4 as uuidv4 } from 'uuid';
 
 const firebase = require('firebase')
-const database = require('firebase/database')
+require('firebase/database')
+require('firebase/auth')
 
 var firebaseConfig = {
     apiKey: "AIzaSyCfUWQ9_arx7AB9ji9p4SHmSO2ejp79c-Y",
@@ -18,7 +19,13 @@ if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig)
 }
 
-var db = firebase.database()
+const signIn = (user, password) => {
+    return firebase.auth().signInWithEmailAndPassword(user, password);
+}
+
+const signUp = (user, passowrd) => {
+    return firebase.auth().createUserWithEmailAndPassword(user, passowrd)
+}
 
 /**
  * Método para guardar citas
@@ -50,4 +57,4 @@ const consultarCita = (userID, fecha) => {
     })
 }
 
-export { crearCita, consultarCita }
+export { crearCita, consultarCita, signIn, signUp }
