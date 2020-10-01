@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { signIn, signUp } from '../firebase/firebase'
 import './login.css'
+import { useUser } from '../context/user-context'
 
 function LoginPage() {
     const [mail, setMail] = useState("")
@@ -8,12 +9,15 @@ function LoginPage() {
     const [errorMsg, setErrorMsg] = useState()
     const [isRegister, setIsRegister] = useState(false)
 
+    const { user, loginUser } = useUser()
+
     const changeAction = () => {
         setIsRegister(isRegister ? false : true)
     }
 
     const login = (e) => {
         e.preventDefault()
+        loginUser(mail, pass)
         signIn(mail, pass).then(res => {
             console.log(res);
         }).catch(error => {
@@ -42,6 +46,7 @@ function LoginPage() {
 
     return (
         <div className="container">
+            {user ? <h1>{user}</h1> : <></>}
             <div className="main">
                 <form onSubmit={e => { isRegister ? register(e) : login(e) }}>
                     <img src="/logo.jpeg" alt="Monda Logo" />
