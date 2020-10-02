@@ -24,7 +24,7 @@ form {
     align-items: stretch;
 }
 
-input[type="email"], input[type="password"] {
+input[type="email"], input[type="password"], input[type="text"] {
     margin-bottom: 1em;
     background-color: red;
     border: none;

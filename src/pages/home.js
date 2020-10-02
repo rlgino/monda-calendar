@@ -4,6 +4,7 @@ import './home.css';
 import NewAppoinmentDialog from '../components/dialog/newdialog';
 import { revertDate } from '../utils';
 import Header from '../components/header/header';
+import { useUser } from '../context/user-context';
 
 function Home() {
     const [date, setDate] = useState(new Date());
@@ -19,6 +20,8 @@ function Home() {
     const [showDialog, setShowDialog] = useState(false)
 
     const [userID, setUserID] = useState(null)
+
+    const { user } = useUser()
 
     useEffect(() => {
         if (date.getHours() <= 17 && date.getHours() >= 8) {
@@ -133,6 +136,9 @@ function Home() {
                 date={date}
                 sendAppointment={sendAppointment} /> : null
         }
+        <div>
+            <h1>{user}</h1>
+        </div>
         <div className="w-full h-full sm:w-2/5 border">
             <div className={parte === 'dia' ? 'w-full h-auto header-day' : parte === 'noche' ? 'w-full h-auto header-night' : 'w-full h-auto header-afternoon'}>
                 <Header date={date} changeMonth={changeMonth} moveYear={moveYear} />

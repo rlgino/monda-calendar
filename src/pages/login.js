@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
-import { signIn, signUp } from '../firebase/firebase'
 import './login.css'
 import { useUser } from '../context/user-context'
 
 function LoginPage() {
-    const { user, loginUser, signOut } = useUser()
+    const { user, loginUser, signOut, createUser } = useUser()
 
+    const [displayName, setDisplayName] = useState("")
     const [mail, setMail] = useState("")
     const [pass, setPass] = useState("")
     const [errorMsg, setErrorMsg] = useState()
@@ -30,8 +30,7 @@ function LoginPage() {
 
     const login = (e) => {
         e.preventDefault()
-        loginUser(mail, pass)
-        signIn(mail, pass).then(res => {
+        loginUser(mail, pass).then(res => {
             console.log(res);
         }).catch(error => {
             console.error(error);
@@ -45,8 +44,11 @@ function LoginPage() {
 
     const register = (e) => {
         e.preventDefault()
-        signUp(mail, pass).then(res => {
-            console.log(res);
+        createUser(mail, pass, displayName).then(res => {
+            setMail("")
+            setPass("")
+            setDisplayName("")
+            changeAction();
         }).catch(error => {
             console.error(error);
             if (error.code === "auth/user-not-found") {
@@ -63,8 +65,11 @@ function LoginPage() {
                 <form onSubmit={e => { isRegister ? register(e) : login(e) }}>
                     <img src="/logo.jpeg" alt="Monda Logo" />
                     <h1>Bienvenido</h1>
-                    <input type="email" placeholder="Email" onChange={e => setMail(e.target.value)} required />
-                    <input type="password" placeholder="Password" onChange={e => setPass(e.target.value)} required />
+                    {
+                        isRegister ? <input type="text" placeholder="Name" value={displayName} onChange={e => setDisplayName(e.target.value)} required /> : <></>
+                    }
+                    <input type="email" placeholder="Email" value={mail} onChange={e => setMail(e.target.value)} required />
+                    <input type="password" placeholder="Password" value={pass} onChange={e => setPass(e.target.value)} required />
                     <input type="submit" value={isRegister ? "Registrarse" : "Login"} />
                     <div onClick={() => changeAction()} className="action">
                         {!isRegister ? "Registrarse" : "Logguearse"}

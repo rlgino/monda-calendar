@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { signIn, signUp, onAuthStateChange, signOut as firebaseSignOut } from '../firebase/firebase'
+import { signIn, signUp, onAuthStateChange, signOut as firebaseSignOut, getCurrentUser } from '../firebase/firebase'
 
 const UserContext = React.createContext()
 
@@ -11,7 +11,7 @@ export function UserProvider(props) {
         onAuthStateChange(function (userResult) {
             console.log(userResult);
             if (userResult) {
-                setUser(userResult.email)
+                setUser(userResult.displayName)
             } else {
                 setUser(null)
             }
@@ -23,8 +23,20 @@ export function UserProvider(props) {
         return signIn(mail, password)
     }
 
-    const createUser = (mail, password) => {
-        return signUp(mail, password)
+    const createUser = (mail, password, displayName) => {
+        return signUp(mail, password).then(function (result) {
+            return result.user.updateProfile({
+                displayName: displayName
+            })
+        });
+    }
+
+    const updateUser = (displayName) => {
+        var user = getCurrentUser();
+
+        return user.updateProfile({
+            displayName: displayName
+        })
     }
 
     const signOut = () => {
@@ -33,7 +45,7 @@ export function UserProvider(props) {
 
     const value = React.useMemo(() => {
         return ({
-            user, loadingUser, loginUser, createUser, signOut
+            user, loadingUser, loginUser, createUser, signOut, updateUser
         })
     }, [user, loadingUser])
 

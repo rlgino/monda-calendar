@@ -35,6 +35,10 @@ const onAuthStateChange = (func) => {
     return firebase.auth().onAuthStateChanged(func)
 }
 
+const getCurrentUser = () => {
+    return firebase.auth().currentUser
+}
+
 /**
  * Método para guardar citas
  * @param {Cita} cita Cita a guardar en DB
@@ -65,4 +69,4 @@ const consultarCita = (userID, fecha) => {
     })
 }
 
-export { crearCita, consultarCita, signIn, signUp, signOut, onAuthStateChange }
+export { crearCita, consultarCita, signIn, signUp, signOut, onAuthStateChange, getCurrentUser }
