@@ -23,8 +23,16 @@ const signIn = (user, password) => {
     return firebase.auth().signInWithEmailAndPassword(user, password);
 }
 
+const signOut = () => {
+    return firebase.auth().signOut();
+}
+
 const signUp = (user, passowrd) => {
     return firebase.auth().createUserWithEmailAndPassword(user, passowrd)
+}
+
+const onAuthStateChange = (func) => {
+    return firebase.auth().onAuthStateChanged(func)
 }
 
 /**
@@ -57,4 +65,4 @@ const consultarCita = (userID, fecha) => {
     })
 }
 
-export { crearCita, consultarCita, signIn, signUp }
+export { crearCita, consultarCita, signIn, signUp, signOut, onAuthStateChange }

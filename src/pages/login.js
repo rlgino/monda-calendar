@@ -4,12 +4,25 @@ import './login.css'
 import { useUser } from '../context/user-context'
 
 function LoginPage() {
+    const { user, loginUser, signOut } = useUser()
+
     const [mail, setMail] = useState("")
     const [pass, setPass] = useState("")
     const [errorMsg, setErrorMsg] = useState()
     const [isRegister, setIsRegister] = useState(false)
 
-    const { user, loginUser } = useUser()
+    if (user) {
+        const closeSession = e => {
+            signOut()
+        }
+
+        return (<div>
+            <h1>{user}</h1>
+            <div onClick={e => closeSession(e)}>
+                Salir...
+            </div>
+        </div>)
+    }
 
     const changeAction = () => {
         setIsRegister(isRegister ? false : true)
@@ -46,7 +59,6 @@ function LoginPage() {
 
     return (
         <div className="container">
-            {user ? <h1>{user}</h1> : <></>}
             <div className="main">
                 <form onSubmit={e => { isRegister ? register(e) : login(e) }}>
                     <img src="/logo.jpeg" alt="Monda Logo" />
