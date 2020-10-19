@@ -136,34 +136,34 @@ function Home() {
                 date={date}
                 sendAppointment={sendAppointment} /> : null
         }
-        <div>
-            <h1>{user}</h1>
-        </div>
         <div className="w-full h-full sm:w-2/5 border">
             <div className={parte === 'dia' ? 'w-full h-auto header-day' : parte === 'noche' ? 'w-full h-auto header-night' : 'w-full h-auto header-afternoon'}>
+                <div className="user-section">
+                    {user ? user : "Logguearse"}
+                </div>
                 <Header date={date} changeMonth={changeMonth} moveYear={moveYear} />
                 <div className="calendario-header font-bold">
                     <div className="flex justify-center items-center text-white">
                         D
-          </div>
+                    </div>
                     <div className="flex justify-center items-center text-white">
                         L
-          </div>
+                    </div>
                     <div className="flex justify-center items-center text-white">
                         M
-          </div>
+                    </div>
                     <div className="flex justify-center items-center text-white">
                         X
-          </div>
+                    </div>
                     <div className="flex justify-center items-center text-white">
                         J
-          </div>
+                    </div>
                     <div className="flex justify-center items-center text-white">
                         V
-          </div>
+                    </div>
                     <div className="flex justify-center items-center text-white">
                         S
-          </div>
+                    </div>
                 </div>
             </div >
 
