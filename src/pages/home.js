@@ -5,6 +5,7 @@ import NewAppoinmentDialog from '../components/dialog/newdialog';
 import { revertDate } from '../utils';
 import Header from '../components/header/header';
 import { useUser } from '../context/user-context';
+import { Link } from 'react-router-dom';
 
 function Home() {
     const [date, setDate] = useState(new Date());
@@ -129,6 +130,10 @@ function Home() {
         }
     }
 
+    const showSectionMenu = () => {
+        document.querySelector(".user-section").classList.add("show");
+    }
+
     return (<>
         {
             showDialog ? <NewAppoinmentDialog
@@ -137,9 +142,19 @@ function Home() {
                 sendAppointment={sendAppointment} /> : null
         }
         <div className="w-full h-full sm:w-2/5 border">
-            <div className={parte === 'dia' ? 'w-full h-auto header-day' : parte === 'noche' ? 'w-full h-auto header-night' : 'w-full h-auto header-afternoon'}>
-                <div className="user-section">
-                    {user ? user : "Logguearse"}
+            <div className={parte === 'dia' ? 'w-full h-auto header-day' : parte === 'noche' ? 'w-full h-auto header-nigth' : 'w-full h-auto header-afternoon'}>
+                <div className="user-section" onClick={e => showSectionMenu()}>
+                    <span>
+                        {user ? user : "Logguearse"}
+                    </span>
+                    <ul>
+                        <li>Opciones</li>
+                        <li>
+                            <Link to="/login">
+                                Cerrar sesión
+                            </Link>
+                        </li>
+                    </ul>
                 </div>
                 <Header date={date} changeMonth={changeMonth} moveYear={moveYear} />
                 <div className="calendario-header font-bold">

@@ -15,11 +15,23 @@
 }
 
 .user-section {
-    height: 90%;
+    height: 100%;
     display: flex;
     justify-content: flex-end;
     padding: 0.5em;
     margin-right: 5em;
+}
+
+.user-section ul {
+    position: absolute;
+    max-height: 0px;
+    overflow: hidden;
+    transition: all 0.4s;
+    margin-top: 1.2em;
+}
+
+.user-section:hover ul, .show {
+    max-height: 200px;
 }
 
 .combo-months {
