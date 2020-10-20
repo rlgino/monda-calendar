@@ -22,7 +22,7 @@ function Home() {
 
     const [userID, setUserID] = useState(null)
 
-    const { user } = useUser()
+    const { user, signOut } = useUser()
 
     useEffect(() => {
         if (date.getHours() <= 17 && date.getHours() >= 8) {
@@ -32,10 +32,10 @@ function Home() {
         } else {
             setParte('noche')
         }
-        setUserID(20)
+        setUserID(user ? user.uid : null)
         loadContainer()
         return () => { }
-    }, [])
+    }, [user])
 
     const loadContainer = () => {
         var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
@@ -144,17 +144,22 @@ function Home() {
         <div className="w-full h-full sm:w-2/5 border">
             <div className={parte === 'dia' ? 'w-full h-auto header-day' : parte === 'noche' ? 'w-full h-auto header-nigth' : 'w-full h-auto header-afternoon'}>
                 <div className="user-section" onClick={e => showSectionMenu()}>
-                    <span>
-                        {user ? user : "Logguearse"}
-                    </span>
-                    <ul>
-                        <li>Opciones</li>
-                        <li>
-                            <Link to="/login">
-                                Cerrar sesión
-                            </Link>
-                        </li>
-                    </ul>
+                    {user ?
+                        <>
+                            <span>
+                                {user.name}
+                            </span>
+                            <ul>
+                                <li>Opciones</li>
+                                <li>
+                                    <a onClick={e => signOut()}>
+                                        Cerrar sesión
+                                    </a>
+                                </li>
+                            </ul>
+                        </>
+                        : <Link to="/login">Logguearse</Link>
+                    }
                 </div>
                 <Header date={date} changeMonth={changeMonth} moveYear={moveYear} />
                 <div className="calendario-header font-bold">

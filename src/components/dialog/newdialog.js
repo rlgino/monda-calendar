@@ -3,8 +3,8 @@ import './newdialog.css'
 import { formatDate } from '../../utils'
 
 const NewAppoinmentDialog = ({ onCloseDialog, date, sendAppointment }) => {
-    const [timeFrom, setTimeFrom] = useState(null)
-    const [timeTo, setTimeTo] = useState(null)
+    const [timeFrom, setTimeFrom] = useState("")
+    const [timeTo, setTimeTo] = useState("")
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
 

@@ -27,7 +27,7 @@
     max-height: 0px;
     overflow: hidden;
     transition: all 0.4s;
-    margin-top: 1.2em;
+    margin-top: 1.5em;
 }
 
 .user-section:hover ul, .show {

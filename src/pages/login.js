@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import './login.css'
 import { useUser } from '../context/user-context'
+import { Redirect } from 'react-router-dom'
 
 function LoginPage() {
-    const { user, loginUser, signOut, createUser } = useUser()
+    const { user, loginUser, createUser } = useUser()
 
     const [displayName, setDisplayName] = useState("")
     const [mail, setMail] = useState("")
@@ -12,16 +13,7 @@ function LoginPage() {
     const [isRegister, setIsRegister] = useState(false)
 
     if (user) {
-        const closeSession = e => {
-            signOut()
-        }
-
-        return (<div>
-            <h1>{user}</h1>
-            <div onClick={e => closeSession(e)}>
-                Salir...
-            </div>
-        </div>)
+        return <Redirect to="/home" />
     }
 
     const changeAction = () => {

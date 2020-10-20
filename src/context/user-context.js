@@ -9,9 +9,12 @@ export function UserProvider(props) {
 
     useEffect(() => {
         onAuthStateChange(function (userResult) {
-            console.log(userResult);
             if (userResult) {
-                setUser(userResult.displayName)
+                setUser({
+                    name: userResult.displayName,
+                    email: userResult.email,
+                    uid: userResult.uid
+                })
             } else {
                 setUser(null)
             }
