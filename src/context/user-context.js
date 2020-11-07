@@ -18,6 +18,7 @@ export function UserProvider(props) {
             } else {
                 setUser(null)
             }
+            setLoadingUser(false)
         })
         return () => { }
     }, [])

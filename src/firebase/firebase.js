@@ -15,28 +15,30 @@ var firebaseConfig = {
     appId: "1:440530510753:web:38b8597cfedb57742f21e0"
 };
 
-if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig)
+const app = firebase.default
+
+if (!app.apps.length) {
+    app.initializeApp(firebaseConfig)
 }
 
 const signIn = (user, password) => {
-    return firebase.auth().signInWithEmailAndPassword(user, password);
+    return app.auth().signInWithEmailAndPassword(user, password);
 }
 
 const signOut = () => {
-    return firebase.auth().signOut();
+    return app.auth().signOut();
 }
 
 const signUp = (user, passowrd) => {
-    return firebase.auth().createUserWithEmailAndPassword(user, passowrd)
+    return app.auth().createUserWithEmailAndPassword(user, passowrd)
 }
 
 const onAuthStateChange = (func) => {
-    return firebase.auth().onAuthStateChanged(func)
+    return app.auth().onAuthStateChanged(func)
 }
 
 const getCurrentUser = () => {
-    return firebase.auth().currentUser
+    return app.auth().currentUser
 }
 
 /**
@@ -49,7 +51,7 @@ const crearCita = (cita, userID, fecha) => {
     const revertedDate = revertDate(fecha)
     const uuid = uuidv4()
     console.log(`Dando de alta: [citas/${userID}/${revertedDate}/${uuid}]`);
-    return firebase.database().ref(`citas/${userID}/${revertedDate}/${uuid}`).set({
+    return app.database().ref(`citas/${userID}/${revertedDate}/${uuid}`).set({
         fecha: cita.fecha,
         desde: cita.inicio,
         hasta: cita.fin,
@@ -64,7 +66,7 @@ const crearCita = (cita, userID, fecha) => {
  * @param {String} fecha Fecha string de las citas a consultar (formato YYYY/MM/DD)
  */
 const consultarCita = (userID, fecha) => {
-    return firebase.database().ref(`citas/${userID}/${fecha}/`).once('value').then(snapshot => {
+    return app.database().ref(`citas/${userID}/${fecha}/`).once('value').then(snapshot => {
         return snapshot.val()
     })
 }
