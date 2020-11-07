@@ -36,7 +36,7 @@ const Header = ({ date, changeMonth, moveYear }) => {
                 </div>
                 <span>
                     {date.getFullYear()}
-                    <select dir="rtl" value={date.getMonth()} onChange={e => { changeMonth(e) }} className="combo-months" disabled>
+                    <select dir="rtl" value={date.getMonth()} onChange={e => { changeMonth(e) }} className="combo-months">
                         {
                             MESES.map((value, index) => {
                                 return <option value={index} key={index}>{value}</option>
