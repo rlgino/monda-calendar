@@ -35,7 +35,7 @@ function Home() {
         setUserID(user ? user.uid : null)
         loadContainer()
         return () => { }
-    }, [user])
+    }, [user, date])
 
     const loadContainer = () => {
         var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
@@ -69,24 +69,21 @@ function Home() {
     }
 
     const changeDate = (e, day) => {
-        setDate(new Date(date.getFullYear(), date.getMonth(), day))
+        setDate(new Date(date.getFullYear(), date.getMonth(), day, date.getHours(), date.getMinutes()))
         showSidebar(e)
     }
 
     const changeMonth = e => {
         const month = parseInt(e.target.value)
-        setDate(new Date(date.getFullYear(), month, date.getDate()))
-        loadContainer()
+        setDate(new Date(date.getFullYear(), month, date.getDate(), date.getHours(), date.getMinutes()))
     }
 
     const moveYear = (i) => {
-        setDate(new Date(date.getFullYear() + i, date.getMonth(), date.getDate()))
-        loadContainer()
+        setDate(new Date(date.getFullYear() + i, date.getMonth(), date.getDate(), date.getHours(), date.getMinutes()))
     }
 
     const goToToday = e => {
         setDate(new Date());
-        loadContainer()
     }
 
     const isToday = (day) => {
