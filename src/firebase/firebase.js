@@ -2,7 +2,8 @@ import { revertDate } from '../utils';
 import { v4 as uuidv4 } from 'uuid';
 
 const firebase = require('firebase')
-const database = require('firebase/database')
+require('firebase/database')
+require('firebase/auth')
 
 var firebaseConfig = {
     apiKey: "AIzaSyCfUWQ9_arx7AB9ji9p4SHmSO2ejp79c-Y",
@@ -14,11 +15,31 @@ var firebaseConfig = {
     appId: "1:440530510753:web:38b8597cfedb57742f21e0"
 };
 
-if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig)
+const app = firebase.default
+
+if (!app.apps.length) {
+    app.initializeApp(firebaseConfig)
 }
 
-var db = firebase.database()
+const signIn = (user, password) => {
+    return app.auth().signInWithEmailAndPassword(user, password);
+}
+
+const signOut = () => {
+    return app.auth().signOut();
+}
+
+const signUp = (user, passowrd) => {
+    return app.auth().createUserWithEmailAndPassword(user, passowrd)
+}
+
+const onAuthStateChange = (func) => {
+    return app.auth().onAuthStateChanged(func)
+}
+
+const getCurrentUser = () => {
+    return app.auth().currentUser
+}
 
 /**
  * Método para guardar citas
@@ -30,7 +51,7 @@ const crearCita = (cita, userID, fecha) => {
     const revertedDate = revertDate(fecha)
     const uuid = uuidv4()
     console.log(`Dando de alta: [citas/${userID}/${revertedDate}/${uuid}]`);
-    return firebase.database().ref(`citas/${userID}/${revertedDate}/${uuid}`).set({
+    return app.database().ref(`citas/${userID}/${revertedDate}/${uuid}`).set({
         fecha: cita.fecha,
         desde: cita.inicio,
         hasta: cita.fin,
@@ -45,9 +66,9 @@ const crearCita = (cita, userID, fecha) => {
  * @param {String} fecha Fecha string de las citas a consultar (formato YYYY/MM/DD)
  */
 const consultarCita = (userID, fecha) => {
-    return firebase.database().ref(`citas/${userID}/${fecha}/`).once('value').then(snapshot => {
+    return app.database().ref(`citas/${userID}/${fecha}/`).once('value').then(snapshot => {
         return snapshot.val()
     })
 }
 
-export { crearCita, consultarCita }
+export { crearCita, consultarCita, signIn, signUp, signOut, onAuthStateChange, getCurrentUser }

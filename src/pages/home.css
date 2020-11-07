@@ -1,0 +1,114 @@
+.calendario-body {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    width: 100%;
+    height: 360px;
+}
+
+.calendario-header {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: 60px;
+    width: 100%;
+    background: linear-gradient( 0deg, rgba(2, 0, 36, 1) 0%, rgba(0, 0, 0, 0.5) 35%, rgba(0, 0, 0, 0) 100%);
+}
+
+.user-section {
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+    padding: 0.5em;
+    margin-right: 5em;
+}
+
+.user-section ul {
+    position: absolute;
+    max-height: 0px;
+    overflow: hidden;
+    transition: all 0.4s;
+    margin-top: 1.5em;
+}
+
+.user-section:hover ul, .show {
+    max-height: 200px;
+}
+
+.combo-months {
+    background-color: transparent;
+    text-align: right;
+}
+
+.primary-btn {
+    background-color: #90cdf4;
+    padding: 0.5em;
+    border-radius: 50px;
+}
+
+/* HEADER para horario */
+
+.header-nigth {
+    background: url('https://raw.githubusercontent.com/nwasandoval/calendario/master/noche.jpg');
+    background-size: cover;
+}
+
+.header-day {
+    background: url('https://raw.githubusercontent.com/nwasandoval/calendario/master/dia.jpg');
+    background-size: cover;
+}
+
+.header-afternoon {
+    background: url('https://raw.githubusercontent.com/nwasandoval/calendario/master/tarde.jpg');
+    background-size: cover;
+}
+
+/* FIN HEADER para horario */
+
+.w-full {
+    width: 500px;
+}
+
+/* SIDEBAR */
+
+/* SIDEBAR POSITION */
+
+.hour-item {
+    margin-left: -1.225rem
+}
+
+.sidebar {
+    background-color: #f1f1f1;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    right: 0;
+    min-width: 300px;
+    overflow-y: scroll;
+}
+
+.display-flex {
+    display: flex;
+    flex-direction: column;
+}
+
+.hour-section {
+    width: 80%;
+    background-color: gray;
+    min-height: 100px;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+/* SIDEBAR HIDDEN STATE */
+
+.sidebar[aria-hidden="true"] {
+    transition: 200ms;
+    transform: translateX(100%);
+}
+
+/* SIDEBAR VISIBLE STATE */
+
+.sidebar:not([aria-hidden]), .sidebar[aria-hidden="false"] {
+    transition: 200ms;
+    transform: translateX(0);
+}

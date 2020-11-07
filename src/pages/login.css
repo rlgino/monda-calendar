@@ -1,0 +1,54 @@
+.container {
+    height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.main {
+    border: 1px solid black;
+    width: 300px;
+    padding: 1em;
+    border-radius: 25px;
+}
+
+img {
+    width: 10em;
+    height: 10em;
+    align-self: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+input[type="email"], input[type="password"], input[type="text"] {
+    margin-bottom: 1em;
+    background-color: red;
+    border: none;
+    color: black;
+    padding: 1em;
+    border-radius: 25px;
+    width: 95%;
+}
+
+input[type="submit"] {
+    margin-bottom: 1em;
+    background-color: black;
+    border: none;
+    color: white;
+    padding: 0.5em;
+    border-radius: 25px;
+    width: 95%;
+}
+
+.error-msg {
+    color: red;
+    font-size: 0.9em;
+}
+
+.action {
+    margin: auto;
+}
