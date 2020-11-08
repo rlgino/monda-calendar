@@ -1,29 +1,35 @@
 ![React Logo](https://github.com/vercel/vercel/blob/master/packages/frameworks/logos/react.svg)
 
-# React Example
+# Monda Calendar
 
-This directory is a brief example of a [React](https://reactjs.org/) app with [Serverless Functions](https://vercel.com/docs/v2/serverless-functions/introduction) that can be deployed with Vercel and zero configuration.
+### Firebase modules
+* Auth
+* Database
 
-## Deploy Your Own
-
-Deploy your own React project, along with Serverless Functions, with Vercel.
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/vercel/vercel/tree/master/examples/create-react-app-functions)
-
-_Live Example: https://create-react-app.now-examples.now.sh/_
-
-### How We Created This Example
-
-To get started with React, along with [Serverless Functions](https://vercel.com/docs/v2/serverless-functions/introduction), with Vercel, you can use the [Create-React-App CLI](https://reactjs.org/docs/create-a-new-react-app.html#create-react-app) to initialize the project:
-
+### Intall Tailwind
+1. Run scripts:
 ```shell
-$ npx create-react-app my-app
+npm install tailwindcss
+```
+2. Add @tailwind css modules to your main CSS
+```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+3. Run script to initialize Tailwind project:
+```shell
+npx tailwindcss init
+npx tailwindcss build /path/to/main-styles.css -o /path/to/output.css
+```
+4. Import your output styles with tailwind styles in your code:
+```javascript
+import 'output.css'
 ```
 
-### Deploying From Your Terminal
+### Stack
+* ReactJS
+* Firebase
+* UUID
+* TailwindCSS
 
-You can deploy your new React project, along with [Serverless Functions](https://vercel.com/docs/v2/serverless-functions/introduction), with a single command from your terminal using [Vercel CLI](https://vercel.com/download):
-
-```shell
-$ vercel
-```
